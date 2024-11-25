@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>画像選択</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #fff; /* 背景色を白に変更 */
+            position: relative; /* 追加 */
+        }
+
+        h1, h2 {
+            color: #007BFF;
+        }
+
+        img {
+            width: 100vw; /* 画面の幅全体に合わせる */
+            height: 56.25vw; /* 16:9のアスペクト比に基づく高さ (100vw * 9 / 16) */
+            object-fit: cover; /* 画像がアスペクト比を保ちつつ、指定した領域にフィットするように調整 */
+            border-radius: 0; /* 角の丸みをなくす */
+            position: absolute;
+            top: 0; /* 画像を上端に配置 */
+            left: 0; /* 画像を左端に配置 */
+        }
+        
+        .left-buttons, .right-buttons {
+            position: fixed; /* ボタンを固定位置に設定 */
+            bottom: 0; /* 画面の最下部に配置 */
+            width: 50%; /* ボタンの幅を指定 */
+            height: 50px; /* ボタンの高さを指定 */
+        }
+        .left-buttons {
+            left: 0; /* 左端に配置 */
+        }
+        .right-buttons {
+            right: 0; /* 右端に配置 */
+        }
+
+
+        .left-buttons, .right-buttons {
+            width: 50%; /* 水平に配置するために幅を50%に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .left-buttons label, .right-buttons label {
+            width: 100%; /* 親要素の幅に合わせる */
+            height: 50px; /* 高さを調整 */
+            font-size: 14px; /* 文字のサイズを調整 */
+            background-color: #036207;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            margin: 5px; /* マージンを調整 */
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;  /*img要素よりも前面に表示するためにz-indexを10に変更 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        button, input[type="submit"] {
+            width: 100px;
+            height: 50px;
+            font-size: 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px 0; /* ボタン間の距離を調整 */
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #00ff00;
+        }
+
+        button:active, input[type="submit"]:active {
+            transform: scale(0.98);
+            z-index: 10; /* 左右のボタンを前面に出すためにz-indexを高く設定 */
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            background-color: #fff; /* コンテナの背景色を白に変更 */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute; /* 追加 */
+            top: 20%; /* 追加 */
+            left: 25%; /* 追加 */
+            transform: translateX(-50%); /* 追加 */
+            z-index: 5; /* 追加 */
+        }
+
+        .leaf-button {
+            width: 350px; /* 両方のボタンの幅を統一 */
+            height: 80px; /* 両方のボタンの高さを統一 */
+            font-size: 24px;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #046e04;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none; /* ボーダーをなくす */
+            border-radius: 20px; /* ボタンの角を丸くする */
+            margin: 10px; /* ボタン間のマージン */
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden; /* 要素からはみ出た部分を隠す */
+            z-index: 10;
+        }
+
+        .leaf-button span {
+            /* ボタン内のテキストに対してスタイルを適用 */
+            color: white;
+            position: relative;
+            z-index: 12; /* テキストを前面に表示させるためにz-indexを12に変更 */
+        }
+        
+        .leaf-button::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            background: #4CAF50;
+            border-radius: 50%;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            transition: all 0.3s ease; /* ホバー時のアニメーション */
+            z-index: 10;
+        }
+
+        .leaf-button:hover::before {
+            background-color: #45a049;
+        }
+
+        .leaf-button:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-button:active {
+            transform: scale(0.95); /* ボタンがアクティブな時に少し縮小させる */
+        }
+
+        a {
+            color: #0aefb2;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <img src="/app/media/shimadaen.jpg" alt="嶋田園">
+    <div class="container">
+        <form action="{% url 'single' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="images" multiple> <!-- name属性を追加 -->
+            <p><input type="submit" value="アップロード"></p>
+        </form>
+    </div>
+    <div class="button-container"> 
+        <div class="left-buttons">
+            <button class="leaf-button" type="button" onclick="window.location.href='{% url 'top' %}'"><span style="z-index: 12; position: relative;">トップページへ</span></button>
+        </div>
+
+        <div class="right-buttons">
+            <button class="leaf-button" type="button" onclick="window.location.href='{% url 'preview' %}'"><span style="z-index: 12; position: relative;">生葉〈表〉の画像ギャラリーへ</span></button>
+        </div>
+    </div>
+</body>
+</html>

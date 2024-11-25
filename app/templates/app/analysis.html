@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f0f0; /* 背景色を指定 */
+            margin: 0; /* マージンをリセット */
+            padding: 0; /* パディングをリセット */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* ビューポートの高さいっぱいに表示するために必要 */
+            flex-direction: column; /* ボタンを垂直に配置する */
+        }
+        
+        h1 {
+            color: #333333; /* 見出しの文字色を指定 */
+            margin-top: 20px; /* タイトルの上のマージン */
+        }
+
+        img {
+            width: 100vw; /* 画面の幅全体に合わせる */
+            height: 56.25vw; /* 16:9のアスペクト比に基づく高さ (100vw * 9 / 16) */
+            object-fit: cover; /* 画像がアスペクト比を保ちつつ、指定した領域にフィットするように調整 */
+            border-radius: 0; /* 角の丸みをなくす */
+            position: absolute;
+            top: 0; /* 画像を上端に配置 */
+            left: 0; /* 画像を左端に配置 */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* ボタンが横に並ぶように設定 */
+            margin-top: 20px;
+        }
+
+        .leaf-button {
+            width: 245px; /* ボタンの幅を小さくする */
+            height: 56px; /* ボタンの高さを小さくする */
+            font-size: 17px; /* フォントサイズを小さくする */
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #036207;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none; /* ボーダーをなくす */
+            border-radius: 20px; /* ボタンの角を丸くする */
+            margin: 10px; /* ボタン間のマージン */
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden; /* 要素からはみ出た部分を隠す */
+            z-index: 1;
+        }
+
+        .leaf-button span {
+            /* ボタン内のテキストに対してスタイルを適用 */
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .leaf-button::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            background: #45a049;
+            border-radius: 50%;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            transition: all 0.3s ease; /* ホバー時のアニメーション */
+            z-index: 0;
+        }
+
+        .leaf-button:hover::before {
+            background-color: #00ff00;
+        }
+
+        .leaf-button:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-button:active {
+            transform: scale(0.95); /* ボタンがアクティブな時に少し縮小させる */
+            background-color: #00ff00; /* ボタンが押されたときの背景色 */
+            transition: background-color 0s; /* ボタンが押されたときの背景色変化の速度を0秒に設定 */
+        }
+
+        /* 左側のボタン */
+        .left-buttons {
+            position: fixed;
+            left: 0;
+            top: 50; /* 修正: ボタンが画面上に固定されるように位置を調整 */
+            display: flex;
+            flex-direction: column; /* 左側のボタンを縦に配置 */
+        }
+        /* 右側のボタン */
+        .right-buttons {
+            position: fixed;
+            right: 0;
+            top: 50; /* 修正: ボタンが画面上に固定されるように位置を調整 */
+            display: flex;
+            flex-direction: column; /* 右側のボタンを縦に配置 */
+        }
+
+        .right-buttons .leaf-button span {
+            color: red; /* 右側ボタンのテキストを赤くする */
+        }
+
+        /* 追加した CSS */
+        .flicker {
+            animation: flickerAnimation 0.2s; /* アニメーションの時間 */
+        }
+
+        /* 追加した CSS */
+        @keyframes flickerAnimation {
+            0% { background-color: #f0f0f0; } /* 初期の背景色 */
+            50% { background-color: #00ff00; } /* フリッカー中の背景色 */
+            100% { background-color: #f0f0f0; } /* 最終的な背景色 */
+        }
+    </style>
+</head>
+<body>
+    <h1>茶葉分岐システム</h1>
+    <img src="/app/media/robot.jpg" alt="嶋田園">
+    <!-- <img src="/home/montblanc_4807/shimadaen/shimadaproject/media/img/LINE_ALBUM_rank_III_230513_17.jpg" alt="嶋田園">
+    <img src="/media/img/LINE_ALBUM_rank_III_230513_17.jpg" alt="嶋田園"> -->
+    
+
+    <div class="left-buttons">
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'top' %}'"><span>トップページへ</span></button>
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'single_ura' %}';"><span>生葉（裏）画像のアップロードへ戻る</span></button>
+        {% comment %} <button class="leaf-button" type="button" onclick="window.location.href='{% url 'shimadaen_camera_activate_ura' %}';"><span>カメラ撮像〈ウラ〉へ戻る</span></button> {% endcomment %}
+    </div>
+        
+    <div class="right-buttons">
+        <button class="leaf-button" type="button" onclick="flickerEffectRepeatedly(); window.location.href='{% url 'shimadaen_aicall' %}'"><span style="color: red;">解析</span></button>
+
+    </div>
+
+    <!-- スクリプトの追加 -->
+    <script>
+        // ボタンがクリックされた時に実行される関数
+        function flickerEffectRepeatedly() {
+            // 連続的にフリッカーエフェクトを実行するために、setIntervalを使用
+            var flickerInterval = setInterval(function() {
+                document.body.classList.add('flicker'); // 'flicker' クラスを body 要素に追加
+    
+                // 一定時間後に 'flicker' クラスを削除する
+                setTimeout(function() {
+                    document.body.classList.remove('flicker');
+                }, 1000); // フリッカーの時間（200ミリ秒）
+            document.querySelectorAll('.left-buttons button, .right-buttons button').forEach(function(button) {
+                button.style.width = '70%'; // ボタンの幅を二回り小さくする
+                button.style.height = '70%'; // ボタンの高さを二回り小さくする
+                button.style.fontSize = '70%'; // テキストの大きさを小さくする
+            });
+            }, 1200); // 0.5秒ごとにフリッカーエフェクトを実行
+    
+            // 解析ボタンのリダイレクト先のURLに遷移するまでの時間を設定
+            setTimeout(function() {
+                clearInterval(flickerInterval); // setIntervalを停止してフリッカーエフェクトを止める
+                window.location.href='{% url 'shimadaen_aicall' %}'; // 解析ボタンのリダイレクト先のURLに遷移
+            }, 60000); // 60秒後にリダイレクト
+        }
+    </script>
+
+</body>
+</html>

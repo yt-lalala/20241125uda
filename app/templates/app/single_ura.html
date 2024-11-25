@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>画像選択</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #fff; /* 背景色を白に変更 */
+            position: relative; /* 追加 */
+        }
+
+        h1, h2 {
+            color: #007BFF;
+        }
+
+        img {
+            width: 100vw; /* 画面の幅全体に合わせる */
+            height: 56.25vw; /* 16:9のアスペクト比に基づく高さ (100vw * 9 / 16) */
+            object-fit: cover; /* 画像がアスペクト比を保ちつつ、指定した領域にフィットするように調整 */
+            border-radius: 0; /* 角の丸みをなくす */
+            position: absolute;
+            top: 0; /* 画像を上端に配置 */
+            left: 0; /* 画像を左端に配置 */
+            right: 0; /* 画像を右端に配置 */
+        }
+        
+        button, input[type="submit"] {
+            width: 350px;
+            height: 80px;
+            font-size: 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px 0; /* ボタン間の距離を調整 */
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #00ff00;
+        }
+
+        button:active, input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        button-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 80%; /* img:nth-of-type(2)からはみ出ないように幅を調整 */
+            max-width: 500px; /* img:nth-of-type(2)の最大幅に合わせる */
+            position: absolute; /* コンテナを絶対位置に設定 */
+            bottom: 0; /* img:nth-of-type(2)の底辺に接するように設定 */
+            left: 10%; /* img:nth-of-type(2)の左端に合わせる */
+        }
+
+        .leaf-button {
+            width: 350px;
+            height: 80px;
+            font-size: 24px;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #046e04;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none; /* ボーダーをなくす */
+            border-radius: 20px; /* ボタンの角を丸くする */
+            margin: 10px; /* ボタン間のマージン */
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden; /* 要素からはみ出た部分を隠す */
+            z-index: 1;
+        }
+
+        .leaf-button span {
+            /* ボタン内のテキストに対してスタイルを適用 */
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .leaf-button::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            background: #4CAF50;
+            border-radius: 50%;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            transition: all 0.3s ease; /* ホバー時のアニメーション */
+            z-index: 0;
+        }
+
+        .leaf-button:hover::before {
+            background-color: #45a049;
+        }
+
+        .leaf-button:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-button:active {
+            transform: scale(0.95); /* ボタンがアクティブな時に少し縮小させる */
+        }
+
+        a {
+            color: #0aefb2;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute; /* 追加 */
+            top: 50%; /* 追加 */
+            left: 50%; /* 追加 */
+            transform: translate(-50%, -50%); /* 追加 */
+            z-index: 2; /* 追加 */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+          /* 左側のボタン */
+          .left-buttons {
+            position: fixed;
+            left: 200px; /* 左側のボタンの絶対位置 */
+            bottom: 0px;
+            display: flex;
+            flex-direction: column;
+        }
+        /* 右側のボタン */
+        .right-buttons {
+            position: fixed;
+            right: 950px; /* 右側のボタンの絶対位置 */
+            bottom: 0px; 
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+
+    <style>
+        .left-buttons {
+            left: 5%; /* 左側のボタンを画面の左から5%の位置に設定 */
+        }
+        .right-buttons {
+            right: 5%; /* 右側のボタンを画面の右から5%の位置に設定 */
+        }
+    </style>
+
+    <style>
+        .left-buttons {
+            position: fixed;
+            left: 10%; /* 画面の左から10%の位置に設定 */
+            bottom: 0px;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-buttons {
+            position: fixed;
+            right: 10%; /* 画面の右から10%の位置に設定 */
+            bottom: 0px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <img src="/app/media/shimadaen.jpg" alt="嶋田園">
+    <div class="container">    
+        <form action="{% url 'single_ura' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="images" multiple> 
+            <p><input type="submit" value="アップロード"></p>
+        </form>
+    </div>
+
+
+    <div class="button-container"> 
+        <div class="left-buttons">
+            
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'preview' %}'"><span>生葉（表）の画像ギャラリーへ</span></button>
+        </div>
+
+
+        <div class="right-buttons">
+            <button class="leaf-button" type="button" onclick="window.location.href='{% url 'preview_ura' %}'"><span>生葉（裏）の画像ギャラリーへ</span></button>
+        </div>
+    </div>
+</body>
+</html>

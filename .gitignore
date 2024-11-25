@@ -1,0 +1,9 @@
+db.sqlite3
+.vscode
+__pycache__
+*.pyc
+.DS_Store
+.env
+myenv
+img
+img_ura

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP</title>
+    
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        h1 {
+            color: #333333;
+            margin-top: 20px;
+        }
+
+        img:nth-of-type(1) {
+            width: 100vw; /* 画面の幅全体に合わせる */
+            height: 56.25vw; /* 16:9のアスペクト比に基づく高さ (100vw * 9 / 16) */
+            object-fit: cover; /* 画像がアスペクト比を保ちつつ、指定した領域にフィットするように調整 */
+            border-radius: 0; /* 角の丸みをなくす */
+            position: absolute;
+            top: 0; /* 画像を上端に配置 */
+            left: 0; /* 画像を左端に配置 */
+        }
+
+
+        img:nth-of-type(2) {
+            width: 75vw; /* 画面の幅全体に合わせる */
+            height: auto; /* 画像の元のアスペクト比を保持 */
+            object-fit: contain; /* 画像全体がコンテナに収まるように調整 */
+            border-radius: 0; /* 角の丸みをなくす */
+            position: absolute;
+            top: 10%; /* 画像を上端に配置 */
+            left: 15%; /* 画像を左端に配置 */
+            z-index: 2;
+        }
+
+
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .leaf-button,
+        .left-buttons label {
+            width: 250px;
+            height: 80px;
+            font-size: 24px;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #036207;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .leaf-button span,
+        .left-buttons label {
+            color: white;
+            position: relative;
+            z-index: 2;
+            padding: 20px; /* ボタン内の余白を追加 */
+            box-sizing: border-box; /* パディングを含めたボタンのサイズを指定 */
+        }
+        
+        .leaf-button::before,
+        .left-buttons label::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            background: #45a049;
+            border-radius: 50%;
+            top: 0%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+
+        .leaf-button:hover::before,
+        .left-buttons label:hover::before {
+            background-color: #00ff00;
+        }
+
+        .leaf-button:hover,
+        .left-buttons label:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-button:active,
+        .left-buttons label:active {
+            transform: scale(0.95);
+        }
+
+        .left-buttons, .right-buttons {
+            width: 50%; /* 水平に配置するために幅を50%に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 0; /* ボタンを画面の下部に配置 */
+            z-index: 10;
+        }
+
+        .left-buttons {
+            left: -20; /* 左側のボタンを画面の左端に配置 */
+        }
+
+        .right-buttons {
+            right: 0; /* 右側のボタンを画面の右端に配置 */
+        }
+
+    </style>
+</head>
+<body style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column;">
+    
+    <div class="graph_fig"> 
+        <img id="shimadaen" src="/app/media/shimadaen.jpg" alt="嶋田園" style="position: absolute; z-index: -9999;">
+        <img id="resultImage" src="/app/media/Figure_1.png" alt="Figure 1">
+    </div>
+
+    <div class="left-buttons">
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'top' %}'"><span>トップページへ</span></button>
+    </div>
+    <div class="right-buttons">
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'preview_ura' %}'" ><span>前の画面に戻る</span></button>     
+    </div>
+
+</body>

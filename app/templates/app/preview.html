@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        h1, h2 {
+            color: #007BFF;
+        }
+
+        button {
+            width: 350px;
+            height: 80px;
+            font-size: 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+            padding: 10px 20px; /* テキスト周囲の余白を追加 */
+            box-sizing: border-box; /* パディングを含めたボタンのサイズを指定 */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .leaf-button {
+            width: 350px;
+            height: 80px;
+            font-size: 24px;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #046e04;
+            color: rgb(253, 252, 252);
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            padding: 10px 20px; /* テキスト周囲の余白を追加 */
+            box-sizing: border-box; /* パディングを含めたボタンのサイズを指定 */
+        }
+
+        .leaf-button span {
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .leaf-button::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            background: #4CAF50;
+            border-radius: 50%;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+
+        .leaf-button:hover::before {
+            background-color: #00ff00;
+        }
+
+        .leaf-button:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-button:active {
+            transform: scale(0.95);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            border-radius: 10px;
+            margin: 5px;
+        }
+
+        .left-buttons {
+            position: fixed;
+            left: 0;
+            top: 50;
+            display: flex;
+            flex-direction: column;
+            z-index: 1; /* 右側のボタンより手前に配置 */
+        }
+
+        .right-buttons {
+            position: fixed;
+            right: 0;
+            top: 50;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 350px * 2 - 20px);
+            margin: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            .left-buttons, .right-buttons {
+              display: none;
+            }
+      
+            .center-content {
+              width: 100%;
+            }
+          }
+
+    </style>
+</head>
+<body>
+    
+    <div class="center-content">
+    <div class="container">
+       
+        {% for image_path in image_paths %}
+            <img src="{{ MEDIA_URL }}{{ image_path }}" alt="{{ MEDIA_URL }}{{ image_path }}" style="display: block; max-width: 100%; height: auto;">
+        {% endfor %}
+    </div>
+    </div>
+
+    <div class="left-buttons">
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'top' %}'"><span>トップページへ</span></button>
+
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'single' %}';"><span>生葉（表）画像のアップロードへ戻る</span></button>
+    </div>
+
+    <div class="right-buttons">
+       
+        <label for="upload">写真を撮影してアップロードする</label>
+        <input id="upload" type="file" name="image" accept="image/*" capture="camera">
+
+        <button class="leaf-button" type="button" onclick="window.location.href='{% url 'single_ura' %}';"><span>生葉（裏）の画像選択へ</span></button>
+    </div>
+</body>
+</html>
